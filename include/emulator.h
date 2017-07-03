@@ -24,7 +24,7 @@ typdef struct State8080
     uint8_t     int_enable;
     uint16_t    sp;
     uint16_t    pc;
-    struct      ConditionCodes cc;
+    struct      ConditionCodes flags;
 } State8080;
 
 void unimplementedInstruction(State8080* state);

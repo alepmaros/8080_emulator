@@ -5,10 +5,10 @@ IDIR = include
 ODIR = obj
 SDIR = src
 
-_DEPS = disassemble.h
+_DEPS = disassemble.h emulator.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = disassemble.o
+_OBJ = disassemble.o emulator.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)

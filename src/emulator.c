@@ -13,7 +13,7 @@
 void unimplementedInstruction(State8080* state)
 {
     // Add more error information here
-    printf("Error, unimplemented instruction\n",)l
+    printf("Error, unimplemented instruction\n");
     exit(1);
 }
 
@@ -23,7 +23,7 @@ int parity(uint8_t num)
     int bits = 0;
     int i;
 
-    for (i; i < 8; i++)
+    for (i = 0; i < 8; i++)
     {
         bits += ((num >> i) & 0x1);
     }
@@ -40,6 +40,7 @@ void emu_add(State8080* state)
     uint16_t answer = (uint16_t) state->a;
 
     switch(*opcode)
+    {
         case 0x80:
             answer += (uint16_t) state->b; break;
         case 0x81:
@@ -57,6 +58,7 @@ void emu_add(State8080* state)
             break;
         case 0x87: 
             answer += (uint16_t) state->a; break;
+    }
 
     state->flags.z = ((answer & 0xff) == 0);
     state->flags.s = ((answer & 0x80) != 0);

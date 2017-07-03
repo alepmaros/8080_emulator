@@ -1,0 +1,4 @@
+# Ignore the ROM files, find that on the internet
+rom/*
+!rom/.gitkeep
+

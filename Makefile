@@ -5,13 +5,13 @@ IDIR = include
 ODIR = obj
 SDIR = src
 
-_DEPS =
+_DEPS = disassemble.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ =
+_OBJ = disassemble.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-$(ODIR)/%.o: $(SDIR)/%.cpp $(DEPS)
+$(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 all: $(OBJ)

@@ -5,6 +5,10 @@ IDIR = include
 ODIR = obj
 SDIR = src
 
+ifeq ($(DEBUG), 1)
+OPTS = -D__debug
+endif
+
 _DEPS = disassemble.h emulator.h utils.h instructions_arithmetic.h \
 	instructions_branch.h instructions_logical.h instructions_data_transfer.h \
 	instructions_stack_io_machine.h
@@ -16,10 +20,10 @@ _OBJ = disassemble.o emulator.o utils.o instructions_arithmetic.o \
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS) $(OPTS)
 
 all: $(OBJ)
-	$(CC) -o main $(SDIR)/main.c $^ $(CFLAGS)
+	$(CC) -o main $(SDIR)/main.c $^ $(CFLAGS) $(OPTS)
 
 .PHONY: clean
 

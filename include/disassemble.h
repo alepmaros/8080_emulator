@@ -1,6 +1,8 @@
 #ifndef DISASSEMBLE_H
 #define DISASSEMBLE_H
 
-int disassemble8080(unsigned char *codebuffer, int pc);
+#include "types.h"
+
+int disassemble8080(State8080* state);
 
 #endif

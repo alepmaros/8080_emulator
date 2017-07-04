@@ -15,6 +15,7 @@ typedef struct
 
 typedef struct
 {
+    // Registers
     uint8_t         a;
     uint8_t         b;
     uint8_t         c;
@@ -22,11 +23,18 @@ typedef struct
     uint8_t         e;
     uint8_t         h;
     uint8_t         l;
-    uint8_t         *memory;
-    uint8_t         int_enable;
     uint16_t        sp;
     uint16_t        pc;
+
+    // Memory
+    uint8_t         *memory;
+
+    // Flags
+    uint8_t         int_enable;
     ConditionCodes flags;
+
+    // Other
+    unsigned long long cycles;
 } State8080;
 
 #endif

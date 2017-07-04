@@ -12,14 +12,53 @@
 #include <stdint.h>
 
 #include "utils.h"
+#include "disassemble.h"
 #include "instructions_arithmetic.h"
 #include "instructions_branch.h"
 #include "instructions_data_transfer.h"
 #include "instructions_logical.h"
 #include "instructions_stack_io_machine.h"
 
+State8080* initializeState8080()
+{
+    State8080* state = calloc(1, sizeof(State8080));
+    // 64K of RAM
+    state->memory = calloc(1, 64 * 1024);
+    return state;
+}
+
+void loadRomToMemory(char* fname, State8080* state)
+{
+    FILE *f = fopen(fname, "rb");
+    if (f == NULL)
+    {
+        printf("Error: Could not open %s\n", fname);
+        exit(1);
+    }
+
+    // Get the file size and read it into a memory buffer
+    fseek(f, 0L, SEEK_END);
+    long int fsize = ftell(f);
+    fseek(f, 0L, SEEK_SET);
+
+    if (fsize > 64*1024)
+    {
+        printf("Error: ROM to big for memory %li", fsize);
+        exit(2);
+    }
+
+    fread(state->memory, fsize, 1, f);
+    fclose(f);
+}
+
 void emulate8080(State8080* state)
 {
+#ifdef __debug
+    print_state(state);
+    disassemble8080(state);
+    printf("\n");
+#endif
+
     unsigned char *opcode = &state->memory[state->pc];
 
     switch(*opcode)
@@ -27,32 +66,6 @@ void emulate8080(State8080* state)
         // NOP
         case 0x00:
             break;
-
-        // LXI B,word
-        case 0x01:
-            state->c = opcode[1];
-            state->b = opcode[2];
-            state->pc += 2;
-            break;
-
-        /**/
-
-        // MOV B,C
-        case 0x41:
-            state->b = state->c;
-            break;
-
-        // MOV B,D
-        case 0x42:
-            state->b = state->d;
-            break;
-
-        // MOV B,E
-        case 0x43:
-            state->b = state->e;
-            break;
-
-        /**/
 
         // ADD R
         case 0x80: 
@@ -69,6 +82,7 @@ void emulate8080(State8080* state)
         case 0xc6:
             inst_adi(state);
 
+        // ADC
         case 0x88:
         case 0x89:
         case 0x8a:
@@ -79,6 +93,12 @@ void emulate8080(State8080* state)
         case 0x8f:
             inst_adc(state);
 
+        default:
+            print_state(state);
+            disassemble8080(state);
+            unimplementedInstruction(state);
+
+            break;
     }
 
     state->pc += 1;

@@ -9,11 +9,11 @@
 
  returns the number of bytes of the op
  */
-int disassemble8080(unsigned char *codebuffer, int pc)
+int disassemble8080(State8080* state)
 {
-    unsigned char *code = &codebuffer[pc];
+    unsigned char *code = &state->memory[state->pc];
     int opbytes = 1;
-    printf ("%04x ", pc);
+    printf ("%04x ", state->pc);
 
     switch (*code)
     {

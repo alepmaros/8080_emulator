@@ -23,3 +23,29 @@ int parity(uint8_t num)
 
     return 0 == (bits & 0x1);
 }
+
+void print_state(State8080* state)
+{
+    printf( "------STATE8080------\n"
+            "A: %2x\n"
+            "B: %2x\n"
+            "C: %2x\n"
+            "D: %2x\n"
+            "E: %2x\n"
+            "H: %2x\n"
+            "L: %2x\n"
+            "SP: %x\n"
+            "PC: %x\n"
+            "--------FLAGS--------\n"
+            "Z: %d\n"
+            "S: %d\n"
+            "P: %d\n"
+            "CY: %d\n"
+            "AC: %d\n"
+            "---------------------\n"
+            "CYCLES: %llu\n"
+            "---------ENDD--------\n",
+            state->a, state->b, state->c, state->d, state->e, state->h, 
+            state->l, state->sp, state->pc, state->flags.z, state->flags.s,
+            state->flags.p, state->flags.cy, state->flags.ac, state->cycles);
+}

@@ -1,32 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "disassemble.h"
+#include "emulator.h"
 
 int main(int argc, char *argv[])
 {
-    FILE *f = fopen(argv[1], "rb");
-    if (f == NULL)
+    if (argc < 2)
     {
-        printf("Error: Could not open %s\n", argv[1]);
-        exit(1);
+        printf("Error: ./main <rom>\n");
+        exit(3);
     }
 
-    // Get the file size and read it into a memory buffer
-    fseek(f, 0L, SEEK_END);
-    long int fsize = ftell(f);
-    fseek(f, 0L, SEEK_SET);
+    State8080* state = initializeState8080();
+    loadRomToMemory(argv[1], state);
 
-    unsigned char *buffer = malloc(fsize);
-
-    fread(buffer, fsize, 1, f);
-    fclose(f);
-
-    int pc = 0;
-
-    while(pc < fsize)
+    while(1)
     {
-        pc += disassemble8080(buffer, pc);
+        emulate8080(state);
     }
 
     return 0;

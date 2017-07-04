@@ -21,23 +21,30 @@ void inst_add(State8080* state)
     switch(*opcode)
     {
         case 0x80:
-            answer += (uint16_t) state->b; break;
+            answer += (uint16_t) state->b;
+            break;
         case 0x81:
-            answer += (uint16_t) state->c; break;
+            answer += (uint16_t) state->c;
+            break;
         case 0x82:
-            answer += (uint16_t) state->d; break;
+            answer += (uint16_t) state->d;
+            break;
         case 0x83:
-            answer += (uint16_t) state->e; break;
+            answer += (uint16_t) state->e;
+            break;
         case 0x84:
-            answer += (uint16_t) state->h; break;
+            answer += (uint16_t) state->h;
+            break;
         case 0x85:
-            answer += (uint16_t) state->l; break;
+            answer += (uint16_t) state->l;
+            break;
         case 0x86:
             answer += (uint16_t) state->memory[(state->h<<8) | (state->l)];
             state->cycles += 3;
             break;
         case 0x87: 
-            answer += (uint16_t) state->a; break;
+            answer += (uint16_t) state->a;
+            break;
     }
 
     state->flags.z = ((answer & 0xff) == 0);
@@ -57,23 +64,30 @@ void inst_adc(State8080* state)
     switch(*opcode)
     {
         case 0x88:
-            answer += (uint16_t) state->b; break;
+            answer += (uint16_t) state->b;
+            break;
         case 0x89:
-            answer += (uint16_t) state->c; break;
+            answer += (uint16_t) state->c;
+            break;
         case 0x8a:
-            answer += (uint16_t) state->d; break;
+            answer += (uint16_t) state->d;
+            break;
         case 0x8b:
-            answer += (uint16_t) state->e; break;
+            answer += (uint16_t) state->e;
+            break;
         case 0x8c:
-            answer += (uint16_t) state->h; break;
+            answer += (uint16_t) state->h;
+            break;
         case 0x8d:
-            answer += (uint16_t) state->l; break;
+            answer += (uint16_t) state->l;
+            break;
         case 0x8e:
             answer += (uint16_t) state->memory[(state->h<<8) | (state->l)];
             state->cycles += 3;
             break;
         case 0x8f:
-            answer += (uint16_t) state->a; break;
+            answer += (uint16_t) state->a;
+            break;
     }
 
     state->flags.z = ((answer & 0xff) == 0);

@@ -63,8 +63,29 @@ void emulate8080(State8080* state)
             break;
 
         // LXI
+        case 0x01:
+        case 0x11:
+        case 0x21:
         case 0x31:
             inst_lxi(state);
+            break;
+
+        // LDAX
+        case 0x0a:
+        case 0x1a:
+            inst_ldax(state);
+            break;
+
+        // MVI
+        case 0x06:
+        case 0x0e:
+        case 0x16:
+        case 0x1e:
+        case 0x26:
+        case 0x2e:
+        case 0x36:
+        case 0x3e:
+            inst_mvi(state);
             break;
 
         // ADD R
@@ -100,6 +121,10 @@ void emulate8080(State8080* state)
             inst_jmp(state);
             break;
 
+        case 0xcd:
+            inst_call(state);
+            break;
+
         default:
             // Since unimplementedInstructions ends the program
             print_state(state);
@@ -108,7 +133,10 @@ void emulate8080(State8080* state)
             break;
     }
 
-    //getchar();
+#ifdef __debug
+    if (state->n_instructions > 10)
+        getchar();
+#endif
 
     state->n_instructions++;
 }

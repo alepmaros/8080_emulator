@@ -13,7 +13,7 @@ int disassemble8080(State8080* state)
 {
     unsigned char *code = &state->memory[state->pc];
     int opbytes = 1;
-    printf ("%04x ", state->pc);
+    printf ("%04x %02x ", state->pc, *code);
 
     switch (*code)
     {

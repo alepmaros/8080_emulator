@@ -93,6 +93,9 @@ void emulate8080(State8080* state)
         case 0x8f:
             inst_adc(state);
 
+        case 0xc3:
+            inst_jmp(state);
+
         default:
             print_state(state);
             disassemble8080(state);

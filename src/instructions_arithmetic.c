@@ -1,3 +1,10 @@
+/*
+ *
+ * A few notes:
+ *  AC (Auxillary carry) is not implemented since Space Invaders does not use it.
+ *
+ */
+
 #include "instructions_arithmetic.h"
 #include "utils.h"
 
@@ -38,6 +45,8 @@ void inst_add(State8080* state)
     state->flags.cy = (answer > 0xff);
     state->flags.p = parity(answer & 0xff);
     state->a = (answer & 0xff);
+    state->cycles += 4;
+    state->pc += 1;
 }
 
 void inst_adc(State8080* state)
@@ -72,6 +81,8 @@ void inst_adc(State8080* state)
     state->flags.cy = (answer > 0xff);
     state->flags.p = parity(answer & 0xff);
     state->a = (answer & 0xff);
+    state->cycles += 4;
+    state->pc += 1;
 }
 
 void inst_adi(State8080* state)
@@ -84,8 +95,8 @@ void inst_adi(State8080* state)
     state->flags.p = parity(answer & 0xff);
     state->a = (answer & 0xff);
     
-    state->cycles += 3;
-    state->pc += 1;
+    state->cycles += 7;
+    state->pc += 2;
 }
 
 void inst_aci(State8080* state)
@@ -98,6 +109,6 @@ void inst_aci(State8080* state)
     state->flags.p = parity(answer & 0xff);
     state->a = (answer & 0xff);
 
-    state->cycles += 3;
-    state->pc += 1;
+    state->cycles += 7;
+    state->pc += 2;
 }

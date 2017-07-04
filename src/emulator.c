@@ -1,10 +1,3 @@
-/*
- *
- * A few notes:
- *  AC (Auxillary carry) is not implemented since Space Invaders does not use it.
- *
- */
-
 #include "emulator.h"
 
 #include <stdio.h>
@@ -65,6 +58,13 @@ void emulate8080(State8080* state)
     {
         // NOP
         case 0x00:
+            state->pc += 1;
+            state->cycles += 4;
+            break;
+
+        // LXI
+        case 0x31:
+            inst_lxi(state);
             break;
 
         // ADD R
@@ -77,10 +77,12 @@ void emulate8080(State8080* state)
         case 0x86:
         case 0x87:
             inst_add(state);
+            break;
 
         // ADI D8
         case 0xc6:
             inst_adi(state);
+            break;
 
         // ADC
         case 0x88:
@@ -92,20 +94,21 @@ void emulate8080(State8080* state)
         case 0x8e:
         case 0x8f:
             inst_adc(state);
+            break;
 
         case 0xc3:
             inst_jmp(state);
+            break;
 
         default:
             // Since unimplementedInstructions ends the program
-            state->cycles += 4;
             print_state(state);
             disassemble8080(state);
             unimplementedInstruction(state);
             break;
     }
 
+    //getchar();
+
     state->n_instructions++;
-    state->cycles += 4;
-    state->pc += 1;
 }

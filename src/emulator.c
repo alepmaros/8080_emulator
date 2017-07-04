@@ -78,6 +78,18 @@ void emulate8080(State8080* state)
             inst_inx(state);
             break;
 
+        // DCR
+        case 0x05:
+        case 0x0d:
+        case 0x15:
+        case 0x1d:
+        case 0x25:
+        case 0x2d:
+        case 0x35:
+        case 0x3d:
+            inst_dcr(state);
+            break;
+
         // LDAX
         case 0x0a:
         case 0x1a:

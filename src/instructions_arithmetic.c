@@ -156,3 +156,54 @@ void inst_inx(State8080* state)
     state->cycles += 5;
     state->pc += 1;
 }
+
+void inst_dcr(State8080* state)
+{
+    unsigned char *opcode = &state->memory[state->pc];
+    uint16_t answer = 0;
+
+    switch(*opcode)
+    {
+        case 0x05:
+            answer = state->b - 1;
+            state->b = answer & 0xff;
+            break;
+        case 0x0d:
+            answer = state->c - 1;
+            state->c = answer & 0xff;
+            break;
+        case 0x15:
+            answer = state->d - 1;
+            state->d = answer & 0xff;
+            break;
+        case 0x1d:
+            answer = state->e - 1;
+            state->e = answer & 0xff;
+            break;
+        case 0x25:
+            answer = state->h - 1;
+            state->h = answer & 0xff;
+            break;
+        case 0x2d:
+            answer = state->l - 1;
+            state->l = answer & 0xff;
+            break;
+        case 0x35:
+        {
+            uint16_t addr = (state->h << 8) | state->l;
+            answer = state->memory[addr] - 1;
+            state->memory[addr] = answer & 0xff;
+            state->cycles += 5;
+        }
+        case 0x3d:
+            answer = state->a - 1;
+            state->a = answer;
+    }
+
+    state->flags.z = ((answer & 0xff) == 0);
+    state->flags.s = ((answer & 0x80) != 0);
+    state->flags.p = parity(answer & 0xff);
+
+    state->cycles += 5;
+    state->pc += 1;
+}

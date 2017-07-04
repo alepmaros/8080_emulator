@@ -24,6 +24,20 @@ int parity(uint8_t num)
     return 0 == (bits & 0x1);
 }
 
+int parity_16(uint16_t num)
+{
+    int bits = 0;
+    int i;
+
+    for (i = 0; i < 16; i++)
+    {
+        bits += ((num >> i) & 0x1);
+    }
+
+    return 0 == (bits & 0x1);
+}
+
+
 void print_state(State8080* state)
 {
     printf( "------STATE8080------\n"

@@ -27,6 +27,7 @@ void inst_add(State8080* state)
             answer += (uint16_t) state->l; break;
         case 0x86:
             answer += (uint16_t) state->memory[(state->h<<8) | (state->l)];
+            state->cycles += 3;
             break;
         case 0x87: 
             answer += (uint16_t) state->a; break;
@@ -60,6 +61,7 @@ void inst_adc(State8080* state)
             answer += (uint16_t) state->l; break;
         case 0x8e:
             answer += (uint16_t) state->memory[(state->h<<8) | (state->l)];
+            state->cycles += 3;
             break;
         case 0x8f:
             answer += (uint16_t) state->a; break;
@@ -72,8 +74,6 @@ void inst_adc(State8080* state)
     state->a = (answer & 0xff);
 }
 
-// adi
-// ADI 7 cycles
 void inst_adi(State8080* state)
 {
     unsigned char *opcode = &state->memory[state->pc];
@@ -83,10 +83,11 @@ void inst_adi(State8080* state)
     state->flags.cy = (answer > 0xff);
     state->flags.p = parity(answer & 0xff);
     state->a = (answer & 0xff);
+    
+    state->cycles += 3;
+    state->pc += 1;
 }
 
-// aci
-// ACI 7 cycles
 void inst_aci(State8080* state)
 {
     unsigned char *opcode = &state->memory[state->pc];
@@ -96,4 +97,7 @@ void inst_aci(State8080* state)
     state->flags.cy = (answer > 0xff);
     state->flags.p = parity(answer & 0xff);
     state->a = (answer & 0xff);
+
+    state->cycles += 3;
+    state->pc += 1;
 }

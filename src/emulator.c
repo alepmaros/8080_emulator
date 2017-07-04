@@ -97,12 +97,15 @@ void emulate8080(State8080* state)
             inst_jmp(state);
 
         default:
+            // Since unimplementedInstructions ends the program
+            state->cycles += 4;
             print_state(state);
             disassemble8080(state);
             unimplementedInstruction(state);
-
             break;
     }
 
+    state->n_instructions++;
+    state->cycles += 4;
     state->pc += 1;
 }

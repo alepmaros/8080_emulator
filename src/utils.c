@@ -44,8 +44,10 @@ void print_state(State8080* state)
             "AC: %d\n"
             "---------------------\n"
             "CYCLES: %llu\n"
+            "N_INSTRUCTIONS: %llu\n"
             "---------ENDD--------\n",
             state->a, state->b, state->c, state->d, state->e, state->h, 
             state->l, state->sp, state->pc, state->flags.z, state->flags.s,
-            state->flags.p, state->flags.cy, state->flags.ac, state->cycles);
+            state->flags.p, state->flags.cy, state->flags.ac, state->cycles,
+            state->n_instructions);
 }

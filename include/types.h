@@ -35,6 +35,7 @@ typedef struct
 
     // Other
     unsigned long long cycles;
+    unsigned long long n_instructions;
 } State8080;
 
 #endif

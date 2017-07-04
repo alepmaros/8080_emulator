@@ -126,3 +126,33 @@ void inst_aci(State8080* state)
     state->cycles += 7;
     state->pc += 2;
 }
+
+void inst_inx(State8080* state)
+{
+    unsigned char *opcode = &state->memory[state->pc];
+
+    switch(*opcode)
+    {
+        case 0x03:
+            state->c++;
+            if (state->c == 0)
+                state->b++;
+            break;
+        case 0x13:
+            state->e++;
+            if (state->e == 0)
+                state->d++;
+            break;
+        case 0x23:
+            state->l++;
+            if (state->l == 0)
+                state->h++;
+            break;
+        case 0x33:
+            state->sp++;
+            break;
+    }
+
+    state->cycles += 5;
+    state->pc += 1;
+}

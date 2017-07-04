@@ -13,6 +13,10 @@
 
 #include "utils.h"
 #include "instructions_arithmetic.h"
+#include "instructions_branch.h"
+#include "instructions_data_transfer.h"
+#include "instructions_logical.h"
+#include "instructions_stack_io_machine.h"
 
 void emulate8080(State8080* state)
 {

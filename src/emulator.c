@@ -204,7 +204,15 @@ void emulate8080(State8080* state)
             inst_adc(state);
             break;
 
+        case 0xc2:
         case 0xc3:
+        case 0xca:
+        case 0xd2:
+        case 0xda:
+        case 0xf2:
+        case 0xfa:
+        case 0xea:
+        case 0xe2:
             inst_jmp(state);
             break;
 
@@ -220,7 +228,7 @@ void emulate8080(State8080* state)
     }
 
 #ifdef __debug
-    if (state->n_instructions > 13)
+    if (state->n_instructions > 50)
         getchar();
 #endif
 

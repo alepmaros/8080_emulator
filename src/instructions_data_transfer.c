@@ -87,6 +87,23 @@ void inst_ldax(State8080* state)
     state->cycles += 7;
 }
 
+void inst_xchg(State8080* state)
+{
+    //unsigned char *opcode = &state->memory[state->pc];
+    uint8_t temp = 0;
+
+    temp        = state->h;
+    state->h    = state->d;
+    state->d    = temp;
+
+    temp        = state->l;
+    state->l    = state->e;
+    state->e    = temp;
+
+    state->cycles   += 4;
+    state->pc       += 1;
+}
+
 void inst_mov(State8080* state)
 {
     unsigned char *opcode = &state->memory[state->pc];

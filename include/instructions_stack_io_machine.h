@@ -3,9 +3,10 @@
 
 #include "types.h"
 
-// Yet to be implemented
 void inst_push(State8080* state);
 void inst_pop(State8080* state);
+
+// Yet to be implemented
 void inst_xthl(State8080* state);
 void inst_sphl(State8080* state);
 void inst_in(State8080* state);

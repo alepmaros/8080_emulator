@@ -90,6 +90,13 @@ void emulate8080(State8080* state)
             inst_dcr(state);
             break;
 
+        case 0x09:
+        case 0x19:
+        case 0x29:
+        case 0x39:
+            inst_dad(state);
+            break;
+
         // LDAX
         case 0x0a:
         case 0x1a:
@@ -216,8 +223,26 @@ void emulate8080(State8080* state)
             inst_jmp(state);
             break;
 
+        case 0xc5:
+        case 0xd5:
+        case 0xe5:
+        case 0xf5:
+            inst_push(state);
+            break;
+
+        case 0xc1:
+        case 0xd1:
+        case 0xe1:
+        case 0xf1:
+            inst_pop(state);
+            break;
+
         case 0xcd:
             inst_call(state);
+            break;
+
+        case 0xeb:
+            inst_xchg(state);
             break;
 
         case 0xc9:
@@ -236,7 +261,7 @@ void emulate8080(State8080* state)
     }
 
 #ifdef __debug
-    if (state->n_instructions > 1545)
+    if (state->n_instructions > 37407)
         getchar();
 #endif
 

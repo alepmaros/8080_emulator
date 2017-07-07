@@ -168,7 +168,7 @@ void inst_inx(State8080* state)
 void inst_dcr(State8080* state)
 {
     unsigned char *opcode = &state->memory[state->pc];
-    
+
     uint16_t answer = 0;
 
     switch(*opcode)
@@ -215,4 +215,38 @@ void inst_dcr(State8080* state)
 
     state->cycles   += 5;
     state->pc       += 1;
+}
+
+void inst_dad(State8080* state)
+{
+    unsigned char *opcode = &state->memory[state->pc];
+
+    uint32_t hl     = (state->h << 8) | state->l;
+    uint32_t rl     = 0;
+    uint32_t answer = 0;
+
+    switch(*opcode)
+    {
+        case 0x09: // DAD B
+            rl = (state->b << 8) | state->c;
+            break;
+        case 0x19: // DAD D
+            rl = (state->d << 8) | state->e;
+            break;
+        case 0x29: // DAD H
+            rl = (state->h << 8) | state->l;
+            break;
+        case 0x39: // DAD SP
+            rl = state->sp;
+            break;
+    }
+
+    answer = hl + rl;
+
+    state->h        = (answer >> 8) & 0xff;
+    state->l        = (answer >> 0) & 0xff;
+    state->flags.cy = (answer & 0xffff0000) > 0;
+
+    state->pc       += 1;
+    state->cycles   += 10;
 }

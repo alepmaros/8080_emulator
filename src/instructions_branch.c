@@ -48,7 +48,7 @@ void inst_jmp(State8080* state)
                 state->pc += 3;
             }
             break;
-        case 0xf2:
+        case 0xf2: // JP
             if (!state->flags.s)
             {
                 state->pc = (opcode[2] << 8) | opcode[1];
@@ -58,7 +58,7 @@ void inst_jmp(State8080* state)
                 state->pc += 3;
             }
             break;
-        case 0xfa:
+        case 0xfa: // JM
             if (state->flags.s)
             {
                 state->pc = (opcode[2] << 8) | opcode[1];
@@ -68,7 +68,7 @@ void inst_jmp(State8080* state)
                 state->pc += 3;
             }
             break;
-        case 0xea:
+        case 0xea: // JPE
             if (state->flags.p)
             {
                 state->pc = (opcode[2] << 8) | opcode[1];
@@ -78,7 +78,7 @@ void inst_jmp(State8080* state)
                 state->pc += 3;
             }
             break;
-        case 0xe2:
+        case 0xe2: // JPO
             if (!state->flags.p)
             {
                 state->pc = (opcode[2] << 8) | opcode[1];
@@ -105,4 +105,13 @@ void inst_call(State8080* state)
     state->pc = (opcode[2] << 8) | opcode[1];
 
     state->cycles += 17;
+}
+
+void inst_ret(State8080* state)
+{
+    //unsigned char *opcode = &state->memory[state->pc];
+
+    state->pc = state->memory[state->sp] | (state->memory[state->sp+1] << 8);
+    state->sp       += 2;
+    state->cycles   += 10;
 }

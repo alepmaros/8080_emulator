@@ -220,6 +220,14 @@ void emulate8080(State8080* state)
             inst_call(state);
             break;
 
+        case 0xc9:
+            inst_ret(state);
+            break;
+
+        case 0xfe:
+            inst_cpi(state);
+            break;
+
         default:
             print_state(state);
             disassemble8080(state);
@@ -228,7 +236,7 @@ void emulate8080(State8080* state)
     }
 
 #ifdef __debug
-    if (state->n_instructions > 50)
+    if (state->n_instructions > 1545)
         getchar();
 #endif
 

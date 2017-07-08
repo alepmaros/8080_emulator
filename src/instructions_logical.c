@@ -45,6 +45,48 @@ void inst_ani(State8080* state)
     state->pc       += 2;
 }
 
+void inst_ana(State8080* state)
+{
+    unsigned char *opcode = &state->memory[state->pc];
+
+    switch(*opcode)
+    {
+        case 0xa0:
+            state->a = state->a & state->b;
+            break;
+        case 0xa1:
+            state->a = state->a & state->c;
+            break;
+        case 0xa2:
+            state->a = state->a & state->d;
+            break;
+        case 0xa3:
+            state->a = state->a & state->e;
+            break;
+        case 0xa4:
+            state->a = state->a & state->h;
+            break;
+        case 0xa5:
+            state->a = state->a & state->l;
+            break;
+        case 0xa6: // ANA M
+            state->a = state->a & state->memory[ (state->h << 8) | state->l ];
+            state->cycles += 3;
+            break;
+        case 0xa7:
+            state->a = state->a & state->a;
+            break;
+    }
+
+    state->flags.z  = state->a == 0;
+    state->flags.s  = ((state->a & 0x80) != 0);
+    state->flags.p  = parity(state->a);
+    state->flags.cy = 0;
+
+    state->cycles   += 4;
+    state->pc       += 1;
+}
+
 void inst_xra(State8080* state)
 {
     unsigned char *opcode = &state->memory[state->pc];

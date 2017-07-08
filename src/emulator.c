@@ -46,12 +46,6 @@ void loadRomToMemory(char* fname, State8080* state)
 
 void emulate8080(State8080* state)
 {
-#ifdef __debug
-    print_state(state);
-    disassemble8080(state);
-    printf("\n");
-#endif
-
     unsigned char *opcode = &state->memory[state->pc];
 
     switch(*opcode)
@@ -264,6 +258,17 @@ void emulate8080(State8080* state)
             inst_call(state);
             break;
 
+        case 0xa0:
+        case 0xa1:
+        case 0xa2:
+        case 0xa3:
+        case 0xa4:
+        case 0xa5:
+        case 0xa6: // ANA M
+        case 0xa7:
+            inst_ana(state);
+            break;
+
         case 0xe6:
             inst_ani(state);
             break;
@@ -300,8 +305,13 @@ void emulate8080(State8080* state)
     }
 
 #ifdef __debug
-    if (state->n_instructions > 37407)
+    if (state->n_instructions > 8000)
+    {
+        print_state(state);
+        disassemble8080(state);
+        printf("\n");
         getchar();
+    }
 #endif
 
     state->n_instructions++;

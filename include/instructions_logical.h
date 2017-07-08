@@ -7,9 +7,9 @@ void inst_cpi(State8080* state);
 void inst_rrc(State8080* state);
 void inst_ani(State8080* state);
 void inst_xra(State8080* state);
+void inst_ana(State8080* state);
 
 // Yet to be implemented
-void inst_ana(State8080* state);
 void inst_xri(State8080* state);
 void inst_ora(State8080* state);
 void inst_ori(State8080* state);

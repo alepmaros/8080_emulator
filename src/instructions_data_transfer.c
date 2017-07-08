@@ -104,6 +104,26 @@ void inst_xchg(State8080* state)
     state->pc       += 1;
 }
 
+void inst_lda(State8080* state)
+{
+    unsigned char *opcode = &state->memory[state->pc];
+
+    state->a = state->memory[ (opcode[2] << 8) | opcode[1] ];
+
+    state->cycles   += 13;
+    state->pc       += 3;
+}
+
+void inst_sta(State8080* state)
+{
+    unsigned char *opcode = &state->memory[state->pc];
+
+    state->memory[ (opcode[2] << 8) | opcode[1] ] = state->a;
+
+    state->cycles   += 13;
+    state->pc       += 3;
+}
+
 void inst_mov(State8080* state)
 {
     unsigned char *opcode = &state->memory[state->pc];

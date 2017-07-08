@@ -30,7 +30,7 @@ typedef struct
     uint8_t         *memory;
 
     // Flags
-    uint8_t         int_enable;
+    uint8_t         int_enabled;
     ConditionCodes flags;
 
     // Other

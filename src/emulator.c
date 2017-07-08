@@ -115,6 +115,10 @@ void emulate8080(State8080* state)
             inst_mvi(state);
             break;
 
+        case 0x0f:
+            inst_rrc(state);
+            break;
+
         // Change this to if later?
         case 0x40:
         case 0x41:
@@ -182,6 +186,25 @@ void emulate8080(State8080* state)
             inst_mov(state);
             break;
 
+        case 0x3a:
+            inst_lda(state);
+            break;
+
+        case 0x32:
+            inst_sta(state);
+            break;
+
+        case 0xa8:
+        case 0xa9:
+        case 0xaa:
+        case 0xab:
+        case 0xac:
+        case 0xad:
+        case 0xae:
+        case 0xaf:
+            inst_xra(state);
+            break;
+
         // ADD R
         case 0x80: 
         case 0x81:
@@ -241,6 +264,10 @@ void emulate8080(State8080* state)
             inst_call(state);
             break;
 
+        case 0xe6:
+            inst_ani(state);
+            break;
+
         case 0xeb:
             inst_xchg(state);
             break;
@@ -251,6 +278,18 @@ void emulate8080(State8080* state)
 
         case 0xfe:
             inst_cpi(state);
+            break;
+
+        case 0xd3:
+            inst_out(state);
+            break;
+
+        case 0xf3:
+            inst_di(state);
+            break;
+
+        case 0xfb:
+            inst_ei(state);
             break;
 
         default:

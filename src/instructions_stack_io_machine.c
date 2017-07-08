@@ -69,3 +69,30 @@ void inst_pop(State8080* state)
     state->pc       += 1;
     state->cycles   += 10;
 }
+
+void inst_out(State8080* state)
+{
+    unsigned char *opcode   = &state->memory[state->pc];
+    uint8_t port            = opcode[1];
+
+    // Do nothing for now
+
+    state->cycles   += 10;
+    state->pc       += 2;
+}
+
+void inst_ei(State8080* state)
+{
+    state->int_enabled = 1;
+
+    state->cycles   += 4;
+    state->pc       += 1;
+}
+
+void inst_di(State8080* state)
+{
+    state->int_enabled = 0;
+
+    state->cycles   += 4;
+    state->pc       += 1;
+}
